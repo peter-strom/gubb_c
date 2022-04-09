@@ -27,7 +27,7 @@
 ******************************************************************************/
 #define SET_BIT(REGISTER, BIT) REGISTER |= (1 << BIT) /* Ettställer bit i specifikt register. */
 #define CLEAR_BIT(REGISTER, BIT) REGISTER &= ~(1 << BIT) /* Nollställer bit i specifikt register. */
-#define READ_BIT(REGISTER, BIT) (REGISTER &= (1 << BIT)) /* Avläser bit i enskilt register. */
+#define READ_BIT(REGISTER, BIT) (REGISTER & (1 << BIT)) /* Avläser bit i enskilt register. */
 #define ASSIGN(REGISTER, BIT) REGISTER = (1 << BIT) /* Tilldelar nytt värde, ettställer specifik bit */
 #define SET(REGISTER) REGISTER = 0xFF /* Ettställer samtliga bitar i register. */
 #define CLEAR(REGISTER) REGISTER = 0x00 /* Nollställer samtliga bitar i register. */
