@@ -24,8 +24,8 @@ void setup(void)
 	unsigned char button_PIN = 13;
 	unsigned char temp_PIN = 1;
 	
-	enum TimerSelection timer0_selection = TIMER0;
-	enum TimerSelection timer1_selection = TIMER1;
+	TimerSelection timer0_selection = TIMER0;
+	TimerSelection timer1_selection = TIMER1;
 	
 	float timer0_delay = 300;
 	float timer1_delay = 500;
