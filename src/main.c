@@ -2,17 +2,19 @@
 #include "header.h"
 
 /******************************************************************************
-* Funktionen main utgör programmets start- och slutpunkt. Programmets globala
-* variabler initieras via anrop av funktionen setup. En goto-sats används för
-* att hålla igång programmet så länge matningsspänning tillförs. Resterande
-* del av programmet är avbrottsgenererat, så hopp sker kontinuerligt till
-* adressen döpt loop.
+* Funktionen main utgÃ¶r programmets start- och slutpunkt. Programmets globala
+* variabler initieras via anrop av funktionen setup. En goto-sats anvÃ¤nds fÃ¶r
+* att hÃ¥lla igÃ¥ng programmet sÃ¥ lÃ¤nge matningsspÃ¤nning tillfÃ¶rs. Resterande
+* del av programmet Ã¤r avbrottsgenererat, sÃ¥ hopp sker kontinuerligt till
+* adressen dÃ¶pt loop.
 ******************************************************************************/
 int main(void)
 {	
 	setup();
-    loop:
-		goto loop;
+    while(true)
+	{
+		
+	}
 	return 0;
 }
 
