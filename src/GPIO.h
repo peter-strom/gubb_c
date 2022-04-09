@@ -6,34 +6,34 @@
 #include "definitions.h"
 
 /******************************************************************************
-* Strukten Led anv‰nds fˆr implementering av lysdioder, som kan placeras pÂ
-* nÂgon av digitala PINs 0 - 13 pÂ Arduino Uno. Varje lysdiod kan t‰ndas, 
-* sl‰ckas och togglas.
+* Strukten Led anv√§nds f√∂r implementering av lysdioder, som kan placeras p√•
+* n√•gon av digitala PINs 0 - 13 p√• Arduino Uno. Varje lysdiod kan t√§ndas, 
+* sl√§ckas och togglas.
 ******************************************************************************/
 struct Led
 {
 	unsigned char PIN; /* Aktuellt PIN-nummer. */
-	enum bool enabled; /* Indikerar ifall lysdioden ‰r pÂ eller inte. */
-	enum IO_port io_port; /* I/O-port som lysdioden ‰r ansluten till. */
+	enum bool enabled; /* Indikerar ifall lysdioden √§r p√• eller inte. */
+	enum IO_port io_port; /* I/O-port som lysdioden √§r ansluten till. */
 };
 
 /******************************************************************************
-* Strukten Button anv‰nds fˆr implementering av tryckknappar, som kan placeras 
-* pÂ nÂgon av digitala PINs 0 - 13 pÂ Arduino Uno. Det finns mˆjlighet att
-* enkelt l‰sa av ifall tryckknappen ‰r nedtryckt. Det finns ocksÂ mˆjlighet 
-* att aktivera samt inaktivera PCI-avbrott pÂ tryckknappens PIN.
+* Strukten Button anv√§nds f√∂r implementering av tryckknappar, som kan placeras 
+* p√• n√•gon av digitala PINs 0 - 13 p√• Arduino Uno. Det finns m√∂jlighet att
+* enkelt l√§sa av ifall tryckknappen √§r nedtryckt. Det finns ocks√• m√∂jlighet 
+* att aktivera samt inaktivera PCI-avbrott p√• tryckknappens PIN.
 * 
-* Avbrottsvektorer g‰llande PCI-avbrott fˆr respektive I/O-port ‰r fˆljande:
+* Avbrottsvektorer g√§llande PCI-avbrott f√∂r respektive I/O-port √§r f√∂ljande:
 *
 * I/O-port B (PIN 8 - 13): PCINT0_vect
-* I/O-port C (PIN A0 - A5): PCINT1_vect - anv‰nds dock inte fˆr tryckknappar.
+* I/O-port C (PIN A0 - A5): PCINT1_vect - anv√§nds dock inte f√∂r tryckknappar.
 * I/O-port D (PIN 0 - 7): PCINT2_vect
 ******************************************************************************/
 struct Button
 {
 	unsigned char PIN; /* Aktuellt PIN-nummer. */
-	enum IO_port io_port; /* Anv‰nd I/O-port. */
-	enum bool interrupt_enabled; /* Indikerar ifall PCI-avbrott ‰r aktiverat. */
+	enum IO_port io_port; /* Anv√§nd I/O-port. */
+	enum bool interrupt_enabled; /* Indikerar ifall PCI-avbrott √§r aktiverat. */
 };
 
 /* Funktionsdeklarationer: */

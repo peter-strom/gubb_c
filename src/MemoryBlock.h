@@ -6,16 +6,16 @@
 #include "Serial.h"
 
 /*************************************************************************************
-* Unionen MemoryBlock används för att kunna välja datatyp för en pekare till ett
-* minnesblock på heapen, vars datatyp kan väljas mellan int, double size_t samt char,
-* där samma minnesutrymme används oavsett datatyp.
+* Unionen MemoryBlock anvÃ¤nds fÃ¶r att kunna vÃ¤lja datatyp fÃ¶r en pekare till ett
+* minnesblock pÃ¥ heapen, vars datatyp kan vÃ¤ljas mellan int, double size_t samt char,
+* dÃ¤r samma minnesutrymme anvÃ¤nds oavsett datatyp.
 *************************************************************************************/
 union MemoryBlock
 {
-	int* integer; /* Pekare till fält för signerade heltal. */
-	double* decimal; /* Pekare till fält för flyttal. */
-	size_t* natural; /* Pekare till fält för osignerade heltal. */
-	char* character; /* Pekare till fält med tecken. */
+	int* integer; /* Pekare till fÃ¤lt fÃ¶r signerade heltal. */
+	double* decimal; /* Pekare till fÃ¤lt fÃ¶r flyttal. */
+	size_t* natural; /* Pekare till fÃ¤lt fÃ¶r osignerade heltal. */
+	char* character; /* Pekare till fÃ¤lt med tecken. */
 };
 
 /* Externa funktioner: */

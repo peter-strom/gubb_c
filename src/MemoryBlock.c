@@ -2,19 +2,19 @@
 #include "MemoryBlock.h"
 
 /*************************************************************************************
-* Funktionen new_MemoryBlock används för att deklarera och initiera ett nytt objekt 
-* av unionen MemoryBlock, som utgörs av ett flertal pekare till ett dynamiskt fält, 
-* där samma minnesutrymme används oavsett vilken datatyp som används. Via pekare 
-* integer, decimal, natural samt character så kan samma minnesutrymme användas för 
-* att lagra signerade eller osignerade heltal, flyttal eller tecken av någon av 
-* datatyper int, double, size_t eller char. Dock kan enbart en av pekarna användas 
-* vid ett givet tillfälle.
+* Funktionen new_MemoryBlock anvÃ¤nds fÃ¶r att deklarera och initiera ett nytt objekt 
+* av unionen MemoryBlock, som utgÃ¶rs av ett flertal pekare till ett dynamiskt fÃ¤lt, 
+* dÃ¤r samma minnesutrymme anvÃ¤nds oavsett vilken datatyp som anvÃ¤nds. Via pekare 
+* integer, decimal, natural samt character sÃ¥ kan samma minnesutrymme anvÃ¤ndas fÃ¶r 
+* att lagra signerade eller osignerade heltal, flyttal eller tecken av nÃ¥gon av 
+* datatyper int, double, size_t eller char. Dock kan enbart en av pekarna anvÃ¤ndas 
+* vid ett givet tillfÃ¤lle.
 *
-* Först allokeras minne till ett objekt av unionen MemoryBlock, som döps till self.
-* Ifall minnesallokeringen misslyckas så returneras NULL direkt. Annars initieras
-* respektive pekare till att peka på NULL, vilket betyder att de för tillfället inte 
-* pekar på någon specifik minnesadress. Slutligen returneras objektet, som nu är 
-* redo att användas.
+* FÃ¶rst allokeras minne till ett objekt av unionen MemoryBlock, som dÃ¶ps till self.
+* Ifall minnesallokeringen misslyckas sÃ¥ returneras NULL direkt. Annars initieras
+* respektive pekare till att peka pÃ¥ NULL, vilket betyder att de fÃ¶r tillfÃ¤llet inte 
+* pekar pÃ¥ nÃ¥gon specifik minnesadress. Slutligen returneras objektet, som nu Ã¤r 
+* redo att anvÃ¤ndas.
 *************************************************************************************/
 union MemoryBlock* new_MemoryBlock(void)
 {
@@ -28,12 +28,12 @@ union MemoryBlock* new_MemoryBlock(void)
 }
 
 /*************************************************************************************
-* Funktionen MemoryBlock_delete används för att frigöra minne för ett objekt av
-* unionen MemoryBlock, vilket i innebär deallokering av ett dynamiskt fält.
-* Ingående argument dataType indikerar objektets aktuella datatyp, som avgör vilken
-* av objektets pekare som pekar på aktuellt fält. Datatypen undersöks, följt av att
-* aktuellt fält frigörs via anrop av funktionen free. Slutligen sätts objektets
-* samtliga pekare till att peka på NULL, vilket innebär att de inte pekar på någon
+* Funktionen MemoryBlock_delete anvÃ¤nds fÃ¶r att frigÃ¶ra minne fÃ¶r ett objekt av
+* unionen MemoryBlock, vilket i innebÃ¤r deallokering av ett dynamiskt fÃ¤lt.
+* IngÃ¥ende argument dataType indikerar objektets aktuella datatyp, som avgÃ¶r vilken
+* av objektets pekare som pekar pÃ¥ aktuellt fÃ¤lt. Datatypen undersÃ¶ks, fÃ¶ljt av att
+* aktuellt fÃ¤lt frigÃ¶rs via anrop av funktionen free. Slutligen sÃ¤tts objektets
+* samtliga pekare till att peka pÃ¥ NULL, vilket innebÃ¤r att de inte pekar pÃ¥ nÃ¥gon
 * specifik minnesadress.
 *************************************************************************************/
 void MemoryBlock_delete(union MemoryBlock* self, enum DataType* dataType)
@@ -66,20 +66,20 @@ void MemoryBlock_delete(union MemoryBlock* self, enum DataType* dataType)
 }
 
 /*************************************************************************************
-* Funktionen MemoryBlock_resize används för att ändra storleken på ett dynamiskt
-* fält via omallokering, implementerat via ett objekt av unionen MemoryBlock.
-* Ingående argument dataType indikerar objektets aktiva datatyp, där motsvarande
-* pekare integer, decimal, natural eller character pekar på aktuellt fält. Ingående
-* argument new_size utgörs av fältets nya storlek efter omallokeringen.
+* Funktionen MemoryBlock_resize anvÃ¤nds fÃ¶r att Ã¤ndra storleken pÃ¥ ett dynamiskt
+* fÃ¤lt via omallokering, implementerat via ett objekt av unionen MemoryBlock.
+* IngÃ¥ende argument dataType indikerar objektets aktiva datatyp, dÃ¤r motsvarande
+* pekare integer, decimal, natural eller character pekar pÃ¥ aktuellt fÃ¤lt. IngÃ¥ende
+* argument new_size utgÃ¶rs av fÃ¤ltets nya storlek efter omallokeringen.
 *
-* Utefter aktiv datatyp så sker omallokering av aktuellt fält via anrop av funktionen
-* realloc. För att inte förlora adressen och därmed tillgången till befintligt fält
-* ifall omallokeringen misslyckas, så skapas ett kopiafält som en pekare döpt copy
-* pekar på, där befintligt innehåll kopieras över. Vid lyckad minnesallokering så
-* sätts motsvarande pekare integer, decimal, natural eller character till att peka
-* på det nya fält som pekaren copy pekar på. Ifall minnesallokeringen lyckas så
+* Utefter aktiv datatyp sÃ¥ sker omallokering av aktuellt fÃ¤lt via anrop av funktionen
+* realloc. FÃ¶r att inte fÃ¶rlora adressen och dÃ¤rmed tillgÃ¥ngen till befintligt fÃ¤lt
+* ifall omallokeringen misslyckas, sÃ¥ skapas ett kopiafÃ¤lt som en pekare dÃ¶pt copy
+* pekar pÃ¥, dÃ¤r befintligt innehÃ¥ll kopieras Ã¶ver. Vid lyckad minnesallokering sÃ¥
+* sÃ¤tts motsvarande pekare integer, decimal, natural eller character till att peka
+* pÃ¥ det nya fÃ¤lt som pekaren copy pekar pÃ¥. Ifall minnesallokeringen lyckas sÃ¥
 * returneras true. Vid misslyckas minnesallokering, vilket indikeras genom att
-* pekaren copy inte pekar på någon minnesadress, så returneras i stället false.
+* pekaren copy inte pekar pÃ¥ nÃ¥gon minnesadress, sÃ¥ returneras i stÃ¤llet false.
 *************************************************************************************/
 enum bool MemoryBlock_resize(union MemoryBlock* self, enum DataType* dataType, size_t* new_size)
 {
@@ -119,21 +119,21 @@ enum bool MemoryBlock_resize(union MemoryBlock* self, enum DataType* dataType, s
 }
 
 /*************************************************************************************
-* Funktionen MemoryBlock_assign används för att tilldela ett värde på ett specifikt
-* index i ett dynamiskt fält, som en pekare tillhörande ett objekt av unionen
-* MemoryBlock pekar på. Ingående argument dataType indikerar objekts aktiva datatyp,
-* index indikerar på vilket index som tilldelning skall genomföras och data utgör
-* en pekare till det innehåll som skall skrivas till specificerat index.
+* Funktionen MemoryBlock_assign anvÃ¤nds fÃ¶r att tilldela ett vÃ¤rde pÃ¥ ett specifikt
+* index i ett dynamiskt fÃ¤lt, som en pekare tillhÃ¶rande ett objekt av unionen
+* MemoryBlock pekar pÃ¥. IngÃ¥ende argument dataType indikerar objekts aktiva datatyp,
+* index indikerar pÃ¥ vilket index som tilldelning skall genomfÃ¶ras och data utgÃ¶r
+* en pekare till det innehÃ¥ll som skall skrivas till specificerat index.
 *
-* Utefter aktiv datatyp så tilldelas innehållet till befintligt fält, där voidpekaren
-* data typomvandlas till en pekare av aktiverad datatyp, exempelvis (int*)(data) för
-* att omvandla från en voidpekare till en intpekare ifall aktuell datatyp är int.
-* Därefter genomförs en dereferens för att komma åt innehållet som data pekar på.
-* Till exempel, om aktuell datatyp är int och voidpekaren data har omvandlats till
-* en intpekare, så sker dereferens genom att placera en asterisk framför data. Därmed
-* skrivs *(int*)(data) för att först typomvandla data till en intpekare och sedan
-* komma åt innehållet som data pekar på, där asterisken framför typomvandlingen
-* medför dereferensen.
+* Utefter aktiv datatyp sÃ¥ tilldelas innehÃ¥llet till befintligt fÃ¤lt, dÃ¤r voidpekaren
+* data typomvandlas till en pekare av aktiverad datatyp, exempelvis (int*)(data) fÃ¶r
+* att omvandla frÃ¥n en voidpekare till en intpekare ifall aktuell datatyp Ã¤r int.
+* DÃ¤refter genomfÃ¶rs en dereferens fÃ¶r att komma Ã¥t innehÃ¥llet som data pekar pÃ¥.
+* Till exempel, om aktuell datatyp Ã¤r int och voidpekaren data har omvandlats till
+* en intpekare, sÃ¥ sker dereferens genom att placera en asterisk framfÃ¶r data. DÃ¤rmed
+* skrivs *(int*)(data) fÃ¶r att fÃ¶rst typomvandla data till en intpekare och sedan
+* komma Ã¥t innehÃ¥llet som data pekar pÃ¥, dÃ¤r asterisken framfÃ¶r typomvandlingen
+* medfÃ¶r dereferensen.
 *************************************************************************************/
 void MemoryBlock_assign(union MemoryBlock* self, enum DataType* dataType, 
 						size_t* index, void* data)
@@ -162,17 +162,17 @@ void MemoryBlock_assign(union MemoryBlock* self, enum DataType* dataType,
 }
 
 /*************************************************************************************
-* Funktionen MemoryBlock_set används för att skriva över innehållet på ett specifikt
+* Funktionen MemoryBlock_set anvÃ¤nds fÃ¶r att skriva Ã¶ver innehÃ¥llet pÃ¥ ett specifikt
 * index i en dynamisk array, implementerat via ett objekt av unionen MemoryBlock.
-* Ingående argument dataType indikerar fältets datatyp, index utgör index till det
-* elements som skall skrivas över och data utgör en pekare till det element som
-* skall skrivas till aktuellt index. Beroende på aktuell datatyp så skrivs aktuell
-* data som pekaren data pekar på till specificerat index. För att kunna lägga till
-* datan så typomvandlas voidpekaren data först till en pekare av aktuell datatyp,
-* följt av en dereferens för att komma åt innehållet som pekaren pekar på. Därmed
-* genomförs exempelvis operationen *(int*)(data) för att typomvandla voidpekaren
-* data till en intpekare och sedan komma åt innehållet som denna pekar på ifall
-* aktuell datatyp är int. Samma princip används även för övriga datatyper.
+* IngÃ¥ende argument dataType indikerar fÃ¤ltets datatyp, index utgÃ¶r index till det
+* elements som skall skrivas Ã¶ver och data utgÃ¶r en pekare till det element som
+* skall skrivas till aktuellt index. Beroende pÃ¥ aktuell datatyp sÃ¥ skrivs aktuell
+* data som pekaren data pekar pÃ¥ till specificerat index. FÃ¶r att kunna lÃ¤gga till
+* datan sÃ¥ typomvandlas voidpekaren data fÃ¶rst till en pekare av aktuell datatyp,
+* fÃ¶ljt av en dereferens fÃ¶r att komma Ã¥t innehÃ¥llet som pekaren pekar pÃ¥. DÃ¤rmed
+* genomfÃ¶rs exempelvis operationen *(int*)(data) fÃ¶r att typomvandla voidpekaren
+* data till en intpekare och sedan komma Ã¥t innehÃ¥llet som denna pekar pÃ¥ ifall
+* aktuell datatyp Ã¤r int. Samma princip anvÃ¤nds Ã¤ven fÃ¶r Ã¶vriga datatyper.
 *************************************************************************************/
 void MemoryBlock_set(union MemoryBlock* self, enum DataType* dataType, 
 					 size_t* index, void* data)
@@ -201,16 +201,16 @@ void MemoryBlock_set(union MemoryBlock* self, enum DataType* dataType,
 }
 
 /*************************************************************************************
-* Funktionen MemoryBlock_at används för att läsa innehållet på ett givet index i
-* ett dynamiskt fält, implementerat via ett objekt av unionen MemoryBlock.
-* Utefter aktuell datatyp så returneras adressen till aktuellt element, vilket
-* medför att en pekare till elementet i fråga returneras.
+* Funktionen MemoryBlock_at anvÃ¤nds fÃ¶r att lÃ¤sa innehÃ¥llet pÃ¥ ett givet index i
+* ett dynamiskt fÃ¤lt, implementerat via ett objekt av unionen MemoryBlock.
+* Utefter aktuell datatyp sÃ¥ returneras adressen till aktuellt element, vilket
+* medfÃ¶r att en pekare till elementet i frÃ¥ga returneras.
 *
-* Eftersom fältets datatyp varierar så passeras en voidpekare till aktuellt element,
-* vilket medför att innehållet efter läsning måste typomvandlas till korrekt datatyp,
-* följt av en dereferens. Som exempel, om datatypen på ett fält döpt data är int och
-* elementet på index 5 skall hämtas och lagras i en variabel döpt number så bör
-* följande operation genomföras:
+* Eftersom fÃ¤ltets datatyp varierar sÃ¥ passeras en voidpekare till aktuellt element,
+* vilket medfÃ¶r att innehÃ¥llet efter lÃ¤sning mÃ¥ste typomvandlas till korrekt datatyp,
+* fÃ¶ljt av en dereferens. Som exempel, om datatypen pÃ¥ ett fÃ¤lt dÃ¶pt data Ã¤r int och
+* elementet pÃ¥ index 5 skall hÃ¤mtas och lagras i en variabel dÃ¶pt number sÃ¥ bÃ¶r
+* fÃ¶ljande operation genomfÃ¶ras:
 * int number = *(int*)(MemoryBlock_at(&data, INT, 5);
 *************************************************************************************/
 void* MemoryBlock_at(union MemoryBlock* self, enum DataType* dataType, size_t* index)
@@ -239,16 +239,16 @@ void* MemoryBlock_at(union MemoryBlock* self, enum DataType* dataType, size_t* i
 }
 
 /*************************************************************************************
-* Funktionen MemoryBlock_print används för att skriva ut innehållet i ett dynamiskt
-* fält, implementerat via ett objekt av unionen MemoryBlock. Ingående argument
-* dataType indikerar fältets datatyp, medan size indikerar dess storlek. Om listan
-* är tom avslutas funktionen direkt. Annars skrivs varje element ur fältet ut, där
-* tecken skrivs ut på en enda rad för att implementera en sträng innehållande ett
-* textstycke, medan tal skrivs ut på var sin rad. Utefter aktuell datatyp används
-* lämplig formatspecificerare, där c% används för char, %d för int, %g för double
-* och %zu för size_t. Utskrift sker via seriell överföring, främst via funktioner
+* Funktionen MemoryBlock_print anvÃ¤nds fÃ¶r att skriva ut innehÃ¥llet i ett dynamiskt
+* fÃ¤lt, implementerat via ett objekt av unionen MemoryBlock. IngÃ¥ende argument
+* dataType indikerar fÃ¤ltets datatyp, medan size indikerar dess storlek. Om listan
+* Ã¤r tom avslutas funktionen direkt. Annars skrivs varje element ur fÃ¤ltet ut, dÃ¤r
+* tecken skrivs ut pÃ¥ en enda rad fÃ¶r att implementera en strÃ¤ng innehÃ¥llande ett
+* textstycke, medan tal skrivs ut pÃ¥ var sin rad. Utefter aktuell datatyp anvÃ¤nds
+* lÃ¤mplig formatspecificerare, dÃ¤r c% anvÃ¤nds fÃ¶r char, %d fÃ¶r int, %g fÃ¶r double
+* och %zu fÃ¶r size_t. Utskrift sker via seriell Ã¶verfÃ¶ring, frÃ¤mst via funktioner
 * serial_print, serial_print_integer samt serial_print_unsigned. Innen utskrift
-* påbörjas så initieras seriell överföring via anrop av funktionen init_serial.
+* pÃ¥bÃ¶rjas sÃ¥ initieras seriell Ã¶verfÃ¶ring via anrop av funktionen init_serial.
 *************************************************************************************/
 void MemoryBlock_print(union MemoryBlock* self, enum DataType* dataType, size_t* size)
 {
@@ -304,25 +304,25 @@ void MemoryBlock_print(union MemoryBlock* self, enum DataType* dataType, size_t*
 }
 
 /*************************************************************************************
-* Funktionen MemoryBlock_insert används för att lägga in ett element i en dynamisk
-* array, där efterföljande element flyttas ett steg framåt. Innan denna funktion
-* anropas så måste aktuellt fält ha omallokerats för att rymma ytterligare ett
-* element, annars kommer inte samtliga element få plats i fältet. Det dynamiska
-* fältet är implementerat via ett objekt av unionen MemoryBlock. Ingående argument
-* dataType indikerar fältets datatyp, index indikerar på vilket index det nya
-* elementet skall placeras, size indikerar fältets storlek och data utgör en
-* pekare till det element som skall läggas till.
+* Funktionen MemoryBlock_insert anvÃ¤nds fÃ¶r att lÃ¤gga in ett element i en dynamisk
+* array, dÃ¤r efterfÃ¶ljande element flyttas ett steg framÃ¥t. Innan denna funktion
+* anropas sÃ¥ mÃ¥ste aktuellt fÃ¤lt ha omallokerats fÃ¶r att rymma ytterligare ett
+* element, annars kommer inte samtliga element fÃ¥ plats i fÃ¤ltet. Det dynamiska
+* fÃ¤ltet Ã¤r implementerat via ett objekt av unionen MemoryBlock. IngÃ¥ende argument
+* dataType indikerar fÃ¤ltets datatyp, index indikerar pÃ¥ vilket index det nya
+* elementet skall placeras, size indikerar fÃ¤ltets storlek och data utgÃ¶r en
+* pekare till det element som skall lÃ¤ggas till.
 *
-* Utefter aktuell datatyp så flyttas befintliga element som skall placeras bakom
-* det nya elementet ett steg framåt, vilket realiseras via en for-sats. Slutligen
-* placeras det nya elementet på specificerat index. För att komma åt innehållet
-* som voidpekaren data pekar på, så typomvandlas denna först till en pekare av
-* aktuell datatyp, följt av en dereferens för att komma åt det innehåll som denna
-* pekar på. Som exempel, om aktuell datatyp är int, så typomvandlas först data
-* till en intpekare via en explicit typomvandling (int*)(data), följt av en derefens
-* via en asterisk framför denna typomvandling. Därmed skrivs *(int*)(data) för att
-* först typomvandla till en pekare av aktuell datatyp, följt av en dereferens för
-* att komma åt innehållet och tilldela detta till specicerat index i fältet.
+* Utefter aktuell datatyp sÃ¥ flyttas befintliga element som skall placeras bakom
+* det nya elementet ett steg framÃ¥t, vilket realiseras via en for-sats. Slutligen
+* placeras det nya elementet pÃ¥ specificerat index. FÃ¶r att komma Ã¥t innehÃ¥llet
+* som voidpekaren data pekar pÃ¥, sÃ¥ typomvandlas denna fÃ¶rst till en pekare av
+* aktuell datatyp, fÃ¶ljt av en dereferens fÃ¶r att komma Ã¥t det innehÃ¥ll som denna
+* pekar pÃ¥. Som exempel, om aktuell datatyp Ã¤r int, sÃ¥ typomvandlas fÃ¶rst data
+* till en intpekare via en explicit typomvandling (int*)(data), fÃ¶ljt av en derefens
+* via en asterisk framfÃ¶r denna typomvandling. DÃ¤rmed skrivs *(int*)(data) fÃ¶r att
+* fÃ¶rst typomvandla till en pekare av aktuell datatyp, fÃ¶ljt av en dereferens fÃ¶r
+* att komma Ã¥t innehÃ¥llet och tilldela detta till specicerat index i fÃ¤ltet.
 *************************************************************************************/
 void MemoryBlock_insert(union MemoryBlock* self, enum DataType* dataType, 
 						size_t* index, size_t* size, void* data)
@@ -373,21 +373,21 @@ void MemoryBlock_insert(union MemoryBlock* self, enum DataType* dataType,
 }
 
 /*************************************************************************************
-* Funktionen MemoryBlock_erase används för att ta bort ett element i en dynamisk
-* array, där efterföljande element flyttas ett steg bakåt och därigenom skriver
-* över elementet som skall tas bort. Efter att denna funktion har exekverat så bör
-* aktuellt fält omallokeras för att rymma ett element mindre, då fältet annars
-* rymmer ett element mer än vad arrayen skall innehålla. Det dynamiska fältet är
-* implementerat via ett objekt av unionen MemoryBlock. Ingående argument dataType
-* indikerar fältets datatyp, index indikerar på vilket index det nya elementet
-* skall placeras och size indikerar fältets storlek.
+* Funktionen MemoryBlock_erase anvÃ¤nds fÃ¶r att ta bort ett element i en dynamisk
+* array, dÃ¤r efterfÃ¶ljande element flyttas ett steg bakÃ¥t och dÃ¤rigenom skriver
+* Ã¶ver elementet som skall tas bort. Efter att denna funktion har exekverat sÃ¥ bÃ¶r
+* aktuellt fÃ¤lt omallokeras fÃ¶r att rymma ett element mindre, dÃ¥ fÃ¤ltet annars
+* rymmer ett element mer Ã¤n vad arrayen skall innehÃ¥lla. Det dynamiska fÃ¤ltet Ã¤r
+* implementerat via ett objekt av unionen MemoryBlock. IngÃ¥ende argument dataType
+* indikerar fÃ¤ltets datatyp, index indikerar pÃ¥ vilket index det nya elementet
+* skall placeras och size indikerar fÃ¤ltets storlek.
 *
-* Utefter aktuell datatyp så flyttas samtliga efterföljande element ett steg bakåt,
-* vilket realiseras via en for-sats. Därmed skrivs aktuellt element över, samtidigt
-* som det sista elementet i arrayen förekommer på de två sista adresserna i arrayen,
-* eftersom detta kopieras från befintligt sista index till föregående index utan att
-* skrivas över. Därmed bör fältet sedan omallokeras till att rymma ett element
-* mindre via anrop av funktionen MemoryBlock_resize, där det sista elementet i
+* Utefter aktuell datatyp sÃ¥ flyttas samtliga efterfÃ¶ljande element ett steg bakÃ¥t,
+* vilket realiseras via en for-sats. DÃ¤rmed skrivs aktuellt element Ã¶ver, samtidigt
+* som det sista elementet i arrayen fÃ¶rekommer pÃ¥ de tvÃ¥ sista adresserna i arrayen,
+* eftersom detta kopieras frÃ¥n befintligt sista index till fÃ¶regÃ¥ende index utan att
+* skrivas Ã¶ver. DÃ¤rmed bÃ¶r fÃ¤ltet sedan omallokeras till att rymma ett element
+* mindre via anrop av funktionen MemoryBlock_resize, dÃ¤r det sista elementet i
 * arrayen raderas.
 *************************************************************************************/
 void MemoryBlock_erase(union MemoryBlock* self, enum DataType* dataType, 
@@ -431,18 +431,18 @@ void MemoryBlock_erase(union MemoryBlock* self, enum DataType* dataType,
 }
 
 /*************************************************************************************
-* Funktionen MemoryBlock_sort används för att sortera innehållet i ett dynamiskt fält
-* i stigande ordning, där det minsta talet placeras först och det största talet
-* placeras sist. Ingående argument dataType indikerar fältets datatyp, medan size
-* indikerar dess storlek. Iteration sker genom fältet via nästlade for-satser.
-* Den yttre iteratorn i används för att iterera från första till näst sista element
-* i fältet. Via den inre iteratorn j så jämförs elementet på index i mot samtliga
-* efterföljande element, som nås via iterator j. Ifall elementet på index i är
-* större än elementet på index j så byts elementen mot varandra. Detta genomförs
-* genom att innehållet på index i temporärt lagras via en variabel döpt temp.
-* Sedan skrivs innehållet på index j till index i, följt av att innehållet i
-* variabeln temp skrivs till index j. Via likartade jämförelser och byten mellan
-* alla element så sorteras fältet.
+* Funktionen MemoryBlock_sort anvÃ¤nds fÃ¶r att sortera innehÃ¥llet i ett dynamiskt fÃ¤lt
+* i stigande ordning, dÃ¤r det minsta talet placeras fÃ¶rst och det stÃ¶rsta talet
+* placeras sist. IngÃ¥ende argument dataType indikerar fÃ¤ltets datatyp, medan size
+* indikerar dess storlek. Iteration sker genom fÃ¤ltet via nÃ¤stlade for-satser.
+* Den yttre iteratorn i anvÃ¤nds fÃ¶r att iterera frÃ¥n fÃ¶rsta till nÃ¤st sista element
+* i fÃ¤ltet. Via den inre iteratorn j sÃ¥ jÃ¤mfÃ¶rs elementet pÃ¥ index i mot samtliga
+* efterfÃ¶ljande element, som nÃ¥s via iterator j. Ifall elementet pÃ¥ index i Ã¤r
+* stÃ¶rre Ã¤n elementet pÃ¥ index j sÃ¥ byts elementen mot varandra. Detta genomfÃ¶rs
+* genom att innehÃ¥llet pÃ¥ index i temporÃ¤rt lagras via en variabel dÃ¶pt temp.
+* Sedan skrivs innehÃ¥llet pÃ¥ index j till index i, fÃ¶ljt av att innehÃ¥llet i
+* variabeln temp skrivs till index j. Via likartade jÃ¤mfÃ¶relser och byten mellan
+* alla element sÃ¥ sorteras fÃ¤ltet.
 *************************************************************************************/
 void MemoryBlock_sort(union MemoryBlock* self, enum DataType* dataType, size_t* size)
 {
@@ -516,18 +516,18 @@ void MemoryBlock_sort(union MemoryBlock* self, enum DataType* dataType, size_t* 
 }
 
 /*************************************************************************************
-* Funktionen MemoryBlock_sort_reverse används för att sortera innehållet i ett
-* dynamiskt fält i fallande ordning, där det största talet placeras först och det
-* minsta talet placeras sist. Ingående argument dataType indikerar fältets datatyp,
-* medan size indikerar dess storlek. Iteration sker genom fältet via implementering
-* av nästlade for-satser samt två iteratorer i och j. Den yttre iteratorn i används
-* för att iterera från första till näst sista element i fältet. Via inre iterator j
-* så jämförs elementet på index i mot samtliga efterföljande element. Ifall elementet
-* på index i är mindre än elementet på index j så byts elementen mot varandra. Detta
-* åstadkommes genom att innehållet på index i temporärt lagras via en variabel döpt
-* temp. Sedan skrivs innehållet på index j till index i, följt av att innehållet
-* lagrat av variabeln temp skrivs till index j. Via likartade jämförelser och byten
-* mellan samtliga element så sorteras fältet.
+* Funktionen MemoryBlock_sort_reverse anvÃ¤nds fÃ¶r att sortera innehÃ¥llet i ett
+* dynamiskt fÃ¤lt i fallande ordning, dÃ¤r det stÃ¶rsta talet placeras fÃ¶rst och det
+* minsta talet placeras sist. IngÃ¥ende argument dataType indikerar fÃ¤ltets datatyp,
+* medan size indikerar dess storlek. Iteration sker genom fÃ¤ltet via implementering
+* av nÃ¤stlade for-satser samt tvÃ¥ iteratorer i och j. Den yttre iteratorn i anvÃ¤nds
+* fÃ¶r att iterera frÃ¥n fÃ¶rsta till nÃ¤st sista element i fÃ¤ltet. Via inre iterator j
+* sÃ¥ jÃ¤mfÃ¶rs elementet pÃ¥ index i mot samtliga efterfÃ¶ljande element. Ifall elementet
+* pÃ¥ index i Ã¤r mindre Ã¤n elementet pÃ¥ index j sÃ¥ byts elementen mot varandra. Detta
+* Ã¥stadkommes genom att innehÃ¥llet pÃ¥ index i temporÃ¤rt lagras via en variabel dÃ¶pt
+* temp. Sedan skrivs innehÃ¥llet pÃ¥ index j till index i, fÃ¶ljt av att innehÃ¥llet
+* lagrat av variabeln temp skrivs till index j. Via likartade jÃ¤mfÃ¶relser och byten
+* mellan samtliga element sÃ¥ sorteras fÃ¤ltet.
 *************************************************************************************/
 void MemoryBlock_sort_reverse(union MemoryBlock* self, enum DataType* dataType, size_t* size)
 {

@@ -2,18 +2,18 @@
 #include "Byte.h"
 
 /******************************************************************************
-* Funktionen new_Byte används för att deklarera samt initiera ett objekt av
-* unionen Byte, som används för att läsa och skriva till 8-bitars register,
-* samtidigt som enstaka bitar enkelt kan ett- eller nollställas samt läsas av.
-* Ingående argument data utgörs av objektets startvärde, som tilldelas till
-* unionens 8-bitars medlem data, vilket medför att de enskilda åtta bitarna
-* uppdateras till detta värde på binär form. Först deklareras ett nytt objekt 
-* av unionen i fråga döpt self. Därefter initieras instansvariablerna. 
-* Först initieras samtliga bitar till startvärdet 0 via anrop av funktionen
-* new_Bits. Därefter tilldelas startvärdet till instansvariabeln data via
-* tilldelning av ingående argument med samma namn. Denna tilldelning medför
-* att de enskilda bitarna tilldelas detta värde på binär form. Därefter
-* returneras objektet vid återhoppet, nu redo att användas.
+* Funktionen new_Byte anvÃ¤nds fÃ¶r att deklarera samt initiera ett objekt av
+* unionen Byte, som anvÃ¤nds fÃ¶r att lÃ¤sa och skriva till 8-bitars register,
+* samtidigt som enstaka bitar enkelt kan ett- eller nollstÃ¤llas samt lÃ¤sas av.
+* IngÃ¥ende argument data utgÃ¶rs av objektets startvÃ¤rde, som tilldelas till
+* unionens 8-bitars medlem data, vilket medfÃ¶r att de enskilda Ã¥tta bitarna
+* uppdateras till detta vÃ¤rde pÃ¥ binÃ¤r form. FÃ¶rst deklareras ett nytt objekt 
+* av unionen i frÃ¥ga dÃ¶pt self. DÃ¤refter initieras instansvariablerna. 
+* FÃ¶rst initieras samtliga bitar till startvÃ¤rdet 0 via anrop av funktionen
+* new_Bits. DÃ¤refter tilldelas startvÃ¤rdet till instansvariabeln data via
+* tilldelning av ingÃ¥ende argument med samma namn. Denna tilldelning medfÃ¶r
+* att de enskilda bitarna tilldelas detta vÃ¤rde pÃ¥ binÃ¤r form. DÃ¤refter
+* returneras objektet vid Ã¥terhoppet, nu redo att anvÃ¤ndas.
 ******************************************************************************/
 union Byte new_Byte(unsigned char data)
 {
@@ -24,10 +24,10 @@ union Byte new_Byte(unsigned char data)
 }
 
 /******************************************************************************
-* Funktionen new_Bits utgör initieringsrutin för objekt av strukten Bits,
-* som utgör enskilda bitar till ett 8-bitars register. Först skapas ett objekt
-* av strukten i fråga, som döps till self, följt av att samtliga bitar 
-* tilldelas startvärdet 0. Därefter returneras objekt, nu redo att användas.
+* Funktionen new_Bits utgÃ¶r initieringsrutin fÃ¶r objekt av strukten Bits,
+* som utgÃ¶r enskilda bitar till ett 8-bitars register. FÃ¶rst skapas ett objekt
+* av strukten i frÃ¥ga, som dÃ¶ps till self, fÃ¶ljt av att samtliga bitar 
+* tilldelas startvÃ¤rdet 0. DÃ¤refter returneras objekt, nu redo att anvÃ¤ndas.
 ******************************************************************************/
 struct Bits new_Bits(void)
 {

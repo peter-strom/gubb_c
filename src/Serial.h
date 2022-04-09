@@ -6,35 +6,35 @@
 #include "definitions.h"
 
 /******************************************************************************
-* För att aktivera seriell transmission så ettställs biten TXCIE0 (Transfer 
+* FÃ¶r att aktivera seriell transmission sÃ¥ ettstÃ¤lls biten TXCIE0 (Transfer 
 * Channel Interrupt Enable 0) i kontrollregistret UCSR0B (USART Control and 
 * Status Register 0B). 
 * 
-* För att sätta bithastigheten / Baud Rate för seriell överföring till 115 220 
-* kbps (kilobits per second), så skrivs talet 7.67 till registret UBBR0 
+* FÃ¶r att sÃ¤tta bithastigheten / Baud Rate fÃ¶r seriell Ã¶verfÃ¶ring till 115 220 
+* kbps (kilobits per second), sÃ¥ skrivs talet 7.67 till registret UBBR0 
 * (USART Baud Rate Register 0) enligt formeln
 *
 * UBRR0 = F_CPU / (16 * Baud Rate) - 1 = 16M / (16 * 115 220) - 1 = 8.67 - 1,
 * vilket avrundas till 7.67,
 *
-* där F_CPU är mikrodatorns klockfrekvens och Baud Rate är önskad bithastighet.
+* dÃ¤r F_CPU Ã¤r mikrodatorns klockfrekvens och Baud Rate Ã¤r Ã¶nskad bithastighet.
 *
-* För att vänta tills eventuellt föregående tecken har transmitterats, så
-* implementeras en while-sats, som exekverar så länge dataregistret UDR0
-* (USART Data Register 0) inte är tomt, vilket undersöks genom att kontrollera
+* FÃ¶r att vÃ¤nta tills eventuellt fÃ¶regÃ¥ende tecken har transmitterats, sÃ¥
+* implementeras en while-sats, som exekverar sÃ¥ lÃ¤nge dataregistret UDR0
+* (USART Data Register 0) inte Ã¤r tomt, vilket undersÃ¶ks genom att kontrollera
 * biten UDRE0 (USART Data Register Empty 0) i kontroll- och statusregistret
-* UCSR0A (USART Control and Status Register A), som är nollställd så länge
-* dataregister UDR0 inte är tomt.
+* UCSR0A (USART Control and Status Register A), som Ã¤r nollstÃ¤lld sÃ¥ lÃ¤nge
+* dataregister UDR0 inte Ã¤r tomt.
 *
-* För att transmittera ett vagsnreturtecken \r, vilket genomförs för att nästa
-* transmitterade tecken skall hamna längst till vänster på aktuell rad, så
-* anropas funktionen write_byte, där tecknet \r sätts till ingående argument.
-* För att transmittera ett nolltecken \0, vilket genomförs för att indikera
-* när ett givet textstycke är slut, så anropas funktionen write_byte, där
-* tecknet \0 sätts till ingående argument.
+* FÃ¶r att transmittera ett vagsnreturtecken \r, vilket genomfÃ¶rs fÃ¶r att nÃ¤sta
+* transmitterade tecken skall hamna lÃ¤ngst till vÃ¤nster pÃ¥ aktuell rad, sÃ¥
+* anropas funktionen write_byte, dÃ¤r tecknet \r sÃ¤tts till ingÃ¥ende argument.
+* FÃ¶r att transmittera ett nolltecken \0, vilket genomfÃ¶rs fÃ¶r att indikera
+* nÃ¤r ett givet textstycke Ã¤r slut, sÃ¥ anropas funktionen write_byte, dÃ¤r
+* tecknet \0 sÃ¤tts till ingÃ¥ende argument.
 *
-* Vid behov av att deklarera en sträng, vilket sker då text skall sammansättas
-* med ett heltal, så används makrot SIZE för att sätta strängens kapacitet
+* Vid behov av att deklarera en strÃ¤ng, vilket sker dÃ¥ text skall sammansÃ¤ttas
+* med ett heltal, sÃ¥ anvÃ¤nds makrot SIZE fÃ¶r att sÃ¤tta strÃ¤ngens kapacitet
 * till 5 tecken (inklusive nolltecken).
 ******************************************************************************/
 #define ENABLE_SERIAL_TRANSMISSION SET_BIT(UCSR0B, TXCIE0)

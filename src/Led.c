@@ -2,35 +2,35 @@
 #include "GPIO.h"
 
 /******************************************************************************
-* Funktionen new_Led utgör initieringsrutin för objekt av strukten Led.
-* Ingående argument PIN utgör aktuellt PIN-nummer sett till Arduino Uno
-* (PIN 0 - 13), som är ekvivalent med följande:
+* Funktionen new_Led utgÃ¶r initieringsrutin fÃ¶r objekt av strukten Led.
+* IngÃ¥ende argument PIN utgÃ¶r aktuellt PIN-nummer sett till Arduino Uno
+* (PIN 0 - 13), som Ã¤r ekvivalent med fÃ¶ljande:
 *
 *******************************************************************************
 * PIN (Arduino Uno)          I/O-port          PIN (ATmega328P)               *
-*     0 - 7                     D         Samma som PIN på Arduino Uno        *
-*     8 - 13                    B            PIN på Arduino Uno - 8           *
+*     0 - 7                     D         Samma som PIN pÃ¥ Arduino Uno        *
+*     8 - 13                    B            PIN pÃ¥ Arduino Uno - 8           *
 *******************************************************************************
 *
-* Först allokeras minne för ett nytt objekt av strukten Led som döps till self.
-* Om minnesallokeringen misslyckas så returneras NULL direkt. Annars initieras
-* objektets instansvariabler. Om aktuellt PIN-nummer ligger mellan 0 - 7, så 
-* är lysdioden ansluten till I/O-port D, vilket lagras via instansvariabeln 
-* io_port. Aktuellt PORT-nummer är då samma samma som PIN-numret, vilket 
-* lagras via instansvariabel PIN. Denna PIN sätts till utport genom att
+* FÃ¶rst allokeras minne fÃ¶r ett nytt objekt av strukten Led som dÃ¶ps till self.
+* Om minnesallokeringen misslyckas sÃ¥ returneras NULL direkt. Annars initieras
+* objektets instansvariabler. Om aktuellt PIN-nummer ligger mellan 0 - 7, sÃ¥ 
+* Ã¤r lysdioden ansluten till I/O-port D, vilket lagras via instansvariabeln 
+* io_port. Aktuellt PORT-nummer Ã¤r dÃ¥ samma samma som PIN-numret, vilket 
+* lagras via instansvariabel PIN. Denna PIN sÃ¤tts till utport genom att
 * motsvarande bit i datariktningsregister DDRD (Data Direction Register D)
-* ettställs. Bitvis OR |= används för att enbart ettställa aktuell bit utan 
-* att påverka övriga bitar.
+* ettstÃ¤lls. Bitvis OR |= anvÃ¤nds fÃ¶r att enbart ettstÃ¤lla aktuell bit utan 
+* att pÃ¥verka Ã¶vriga bitar.
 * 
-* Motsvarande genomförs ifall aktuellt PIN-nummer ligger mellan 8 - 13, med
-* skillnaden att I/O-porten då utgörs av I/O-port B, PIN-numret är lika med
-* erhållet PIN-nummer på Arduino Uno - 8, och motsvarande PIN sätts till
-* utport via ettställning av motsvarande bit i datariktningsregister DDRB
+* Motsvarande genomfÃ¶rs ifall aktuellt PIN-nummer ligger mellan 8 - 13, med
+* skillnaden att I/O-porten dÃ¥ utgÃ¶rs av I/O-port B, PIN-numret Ã¤r lika med
+* erhÃ¥llet PIN-nummer pÃ¥ Arduino Uno - 8, och motsvarande PIN sÃ¤tts till
+* utport via ettstÃ¤llning av motsvarande bit i datariktningsregister DDRB
 * (Data Direction Register B).
 *
-* Slutligen sätts pekarna till att peka på motsvarande funktioner, följt
-* av att det nu initierade objektet returneras. Kom ihåg: self.on = Led_on
-* betyder att pekaren on pekar på funktionen Led_on.
+* Slutligen sÃ¤tts pekarna till att peka pÃ¥ motsvarande funktioner, fÃ¶ljt
+* av att det nu initierade objektet returneras. Kom ihÃ¥g: self.on = Led_on
+* betyder att pekaren on pekar pÃ¥ funktionen Led_on.
 ******************************************************************************/
 struct Led* new_Led(unsigned char* PIN)
 {
@@ -60,9 +60,9 @@ struct Led* new_Led(unsigned char* PIN)
 }
 
 /******************************************************************************
-* Funktionen Led_on används för att tända en lysdiod. Ingående argument self
-* utgör en pekare till led-objektet i fråga. Utefter aktuell I/O-port så 
-* ettställs motsvarande bit i register PORTB eller PORTD.
+* Funktionen Led_on anvÃ¤nds fÃ¶r att tÃ¤nda en lysdiod. IngÃ¥ende argument self
+* utgÃ¶r en pekare till led-objektet i frÃ¥ga. Utefter aktuell I/O-port sÃ¥ 
+* ettstÃ¤lls motsvarande bit i register PORTB eller PORTD.
 ******************************************************************************/
 void Led_on(struct Led* self)
 {
@@ -81,8 +81,8 @@ void Led_on(struct Led* self)
 }
 
 /******************************************************************************
-* Funktionen Led_off används för att släcka en lysdiod. Ingående argument
-* self utgör en pekare till lysdioden. Utefter aktuell I/O-port så nollställs
+* Funktionen Led_off anvÃ¤nds fÃ¶r att slÃ¤cka en lysdiod. IngÃ¥ende argument
+* self utgÃ¶r en pekare till lysdioden. Utefter aktuell I/O-port sÃ¥ nollstÃ¤lls
 * motsvarande bit i register PORTB eller PORTD.
 ******************************************************************************/
  void Led_off(struct Led* self)
@@ -102,10 +102,10 @@ void Led_on(struct Led* self)
 }
 
 /******************************************************************************
-* Funktionen Led_toggle används för att toggla en lysdiod. För att genomföra
-* detta undersöks medlemmen enabled. Om denna är true så är lysdioden tänd
-* och då släcks lysdioden via anrop av funktionen Led_off (via pekaren off).
-* Annars så tänds lysdioden via anrop av funktionen Led_on (via pekaren on).
+* Funktionen Led_toggle anvÃ¤nds fÃ¶r att toggla en lysdiod. FÃ¶r att genomfÃ¶ra
+* detta undersÃ¶ks medlemmen enabled. Om denna Ã¤r true sÃ¥ Ã¤r lysdioden tÃ¤nd
+* och dÃ¥ slÃ¤cks lysdioden via anrop av funktionen Led_off (via pekaren off).
+* Annars sÃ¥ tÃ¤nds lysdioden via anrop av funktionen Led_on (via pekaren on).
 ******************************************************************************/
 void Led_toggle(struct Led* self)
 {

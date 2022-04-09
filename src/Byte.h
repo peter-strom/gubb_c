@@ -3,14 +3,14 @@
 #define BYTE_H_
 
 /******************************************************************************
-* Strukten Bits används för att enkelt komma åt enskilda bitar i ett 8-bitars
-* register. Via användning av unionen Byte kan användaren läsa och skriva
-* 8-bitars värden och sedan läsa av enskilda bitar en efter en.
-* Instansvariabler bit0 - bit 7 används för att lagra varje bit i ett givet
-* register, där datatypen unsigned char används. Eftersom enbart en bit
-* behöver allokeras per variabel, så skrivs : 1 efter variabeldeklarationen.
-* Bitarna deklareras i ordningen 0 - 7, då minne allokeras som så i C att
-* minst signifikant bit placeras först (tänk första index i en array).
+* Strukten Bits anvÃ¤nds fÃ¶r att enkelt komma Ã¥t enskilda bitar i ett 8-bitars
+* register. Via anvÃ¤ndning av unionen Byte kan anvÃ¤ndaren lÃ¤sa och skriva
+* 8-bitars vÃ¤rden och sedan lÃ¤sa av enskilda bitar en efter en.
+* Instansvariabler bit0 - bit 7 anvÃ¤nds fÃ¶r att lagra varje bit i ett givet
+* register, dÃ¤r datatypen unsigned char anvÃ¤nds. Eftersom enbart en bit
+* behÃ¶ver allokeras per variabel, sÃ¥ skrivs : 1 efter variabeldeklarationen.
+* Bitarna deklareras i ordningen 0 - 7, dÃ¥ minne allokeras som sÃ¥ i C att
+* minst signifikant bit placeras fÃ¶rst (tÃ¤nk fÃ¶rsta index i en array).
 ******************************************************************************/
 struct Bits
 {
@@ -25,19 +25,19 @@ struct Bits
 };
 
 /******************************************************************************
-* Unionen Byte används för att läsa och skriva till ett 8-bitars register,
-* samtidigt som enstaka bitar enkelt kan ett- eller nollställas samt läsas av.
-* Eftersom medlemmarna allokerar samma minnesutrymme, så kan ett värde skrivas
-* till den ena, så uppdateras den ändra efter detta värde. I detta fall gäller
-* därmed att ett 8-bitars värde kan skrivas till medlemmen data, vilket medför
-* att medlemmen bits, som utgör enskilda bitar, uppdateras till detta värde
-* på binär form. Samtidigt kan en given bit ett- eller nollställas via de
-* enskilda bitarna, vilket påverkar det 8-bitars värdet lagrat i data.
+* Unionen Byte anvÃ¤nds fÃ¶r att lÃ¤sa och skriva till ett 8-bitars register,
+* samtidigt som enstaka bitar enkelt kan ett- eller nollstÃ¤llas samt lÃ¤sas av.
+* Eftersom medlemmarna allokerar samma minnesutrymme, sÃ¥ kan ett vÃ¤rde skrivas
+* till den ena, sÃ¥ uppdateras den Ã¤ndra efter detta vÃ¤rde. I detta fall gÃ¤ller
+* dÃ¤rmed att ett 8-bitars vÃ¤rde kan skrivas till medlemmen data, vilket medfÃ¶r
+* att medlemmen bits, som utgÃ¶r enskilda bitar, uppdateras till detta vÃ¤rde
+* pÃ¥ binÃ¤r form. Samtidigt kan en given bit ett- eller nollstÃ¤llas via de
+* enskilda bitarna, vilket pÃ¥verkar det 8-bitars vÃ¤rdet lagrat i data.
 ******************************************************************************/
 union Byte
 {
-	unsigned char data; /* Data (en byte) för 8-bitars register. */
-	struct Bits bits; /* Separata bitar för 8-bitars register. */
+	unsigned char data; /* Data (en byte) fÃ¶r 8-bitars register. */
+	struct Bits bits; /* Separata bitar fÃ¶r 8-bitars register. */
 };
 
 /* Externa funktioner: */

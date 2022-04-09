@@ -2,25 +2,25 @@
 #include "GPIO.h"
 
 /******************************************************************************
-* Initieringsrutin för tryckknappar. * Ingående argument PIN utgör aktuellt 
-* PIN-nummer sett till Arduino Uno (PIN 0 - 13), som är ekvivalent med följande:
+* Initieringsrutin fÃ¶r tryckknappar. * IngÃ¥ende argument PIN utgÃ¶r aktuellt 
+* PIN-nummer sett till Arduino Uno (PIN 0 - 13), som Ã¤r ekvivalent med fÃ¶ljande:
 *
 *******************************************************************************
 * PIN (Arduino Uno)          I/O-port          PIN (ATmega328P)               *
-*     0 - 7                     D         Samma som PIN på Arduino Uno        *
-*     8 - 13                    B            PIN på Arduino Uno - 8           *
+*     0 - 7                     D         Samma som PIN pÃ¥ Arduino Uno        *
+*     8 - 13                    B            PIN pÃ¥ Arduino Uno - 8           *
 *******************************************************************************
 *
-* Först allokeras minne för ett nytt objekt av strukten Button döpt self. 
-* Om minnesallokeringen misslyckas så returneras NULL direkt. Annars initieras 
-* objektets instansvariabler. Specificerat PIN-nummer sparas, följt av att denna 
-* undersöks för att ta reda på vilken I/O-port som tryckknappaen är ansluten 
-* till, där 0 - 7 innebär att tryckknappen är ansluten till samma PIN på 
-* I/O-port D. Annars om aktuellt PIN-nummer ligger mellan 8 - 13, så är 
-* tryckknappen ansluten till PIN 0 - 5  på I/O-port B. En intern 
-* pullup-resistor på tryckknappens PIN aktiveras via ettställning av 
-* motsvarande bit i aktuellt PORT-register, vilket medför att tryckknappens
-* insignal alltid är hög eller låg (0 eller 1).
+* FÃ¶rst allokeras minne fÃ¶r ett nytt objekt av strukten Button dÃ¶pt self. 
+* Om minnesallokeringen misslyckas sÃ¥ returneras NULL direkt. Annars initieras 
+* objektets instansvariabler. Specificerat PIN-nummer sparas, fÃ¶ljt av att denna 
+* undersÃ¶ks fÃ¶r att ta reda pÃ¥ vilken I/O-port som tryckknappaen Ã¤r ansluten 
+* till, dÃ¤r 0 - 7 innebÃ¤r att tryckknappen Ã¤r ansluten till samma PIN pÃ¥ 
+* I/O-port D. Annars om aktuellt PIN-nummer ligger mellan 8 - 13, sÃ¥ Ã¤r 
+* tryckknappen ansluten till PIN 0 - 5  pÃ¥ I/O-port B. En intern 
+* pullup-resistor pÃ¥ tryckknappens PIN aktiveras via ettstÃ¤llning av 
+* motsvarande bit i aktuellt PORT-register, vilket medfÃ¶r att tryckknappens
+* insignal alltid Ã¤r hÃ¶g eller lÃ¥g (0 eller 1).
 ******************************************************************************/
 struct Button* new_Button(unsigned char* PIN)
 {
@@ -49,11 +49,11 @@ struct Button* new_Button(unsigned char* PIN)
 }
 
 /******************************************************************************
-* Funktionen Button_is_pressed används för att indikera ifall en given 
-* tryckknapp är nedtryckt. Om tryckknappen är ansluten till I/O-port B, så
-* läses motsvarande PIN från registret PINB och returneras. Annars om 
-* tryckknappen är ansluten till I/O-port B, så läses motsvarande PIN från 
-* registret PIND och returneras. Annars vid fel så returneras false.
+* Funktionen Button_is_pressed anvÃ¤nds fÃ¶r att indikera ifall en given 
+* tryckknapp Ã¤r nedtryckt. Om tryckknappen Ã¤r ansluten till I/O-port B, sÃ¥
+* lÃ¤ses motsvarande PIN frÃ¥n registret PINB och returneras. Annars om 
+* tryckknappen Ã¤r ansluten till I/O-port B, sÃ¥ lÃ¤ses motsvarande PIN frÃ¥n 
+* registret PIND och returneras. Annars vid fel sÃ¥ returneras false.
 ******************************************************************************/
 enum bool Button_is_pressed(struct Button* self)
 {
@@ -71,19 +71,19 @@ enum bool Button_is_pressed(struct Button* self)
 }
 
 /******************************************************************************
-* Funktionen Button_enable_interrupt används för att aktivera PCI-avbrott på
-* en given PIN som en tryckknapp är ansluten till. Först aktiveras avbrott
-* globalt via ettställning av bit I (Interrupt Flag) i statusregistret SREG.
-* Därefter undersöks använd I/O-port. Om tryckknappen är ansluten till
-* I/O-port B, så ettställs biten PCIE0 (PIN Change Interrupt Enable 0) i
-* kontrollregistret PCICR (PIN Change Interrupt Control Register), följt av
+* Funktionen Button_enable_interrupt anvÃ¤nds fÃ¶r att aktivera PCI-avbrott pÃ¥
+* en given PIN som en tryckknapp Ã¤r ansluten till. FÃ¶rst aktiveras avbrott
+* globalt via ettstÃ¤llning av bit I (Interrupt Flag) i statusregistret SREG.
+* DÃ¤refter undersÃ¶ks anvÃ¤nd I/O-port. Om tryckknappen Ã¤r ansluten till
+* I/O-port B, sÃ¥ ettstÃ¤lls biten PCIE0 (PIN Change Interrupt Enable 0) i
+* kontrollregistret PCICR (PIN Change Interrupt Control Register), fÃ¶ljt av
 * att motsvarande PCI-avbrott aktiveras i maskregistret PCMSK0 (PIN Change
-* Mask Register 0). Annars om tryckknappen är ansluten till I/O-port D,
-* så ettställs biten PCIE2 (PIN Change Interrupt Enable 2) i kontrollregistret
-* PCICR (PIN Change Interrupt Control Register), följt av
+* Mask Register 0). Annars om tryckknappen Ã¤r ansluten till I/O-port D,
+* sÃ¥ ettstÃ¤lls biten PCIE2 (PIN Change Interrupt Enable 2) i kontrollregistret
+* PCICR (PIN Change Interrupt Control Register), fÃ¶ljt av
 * att motsvarande PCI-avbrott aktiveras i maskregistret PCMSK2 (PIN Change
-* Mask Register 2). Slutligen sätts instansvariabeln interrupt_enabled till
-* true för att indikera att abrott nu är aktiverat.
+* Mask Register 2). Slutligen sÃ¤tts instansvariabeln interrupt_enabled till
+* true fÃ¶r att indikera att abrott nu Ã¤r aktiverat.
 ******************************************************************************/
 void Button_enable_interrupt(struct Button* self)
 {
@@ -108,9 +108,9 @@ void Button_enable_interrupt(struct Button* self)
 }
 
 /******************************************************************************
-* Funktionen Button_disable_interrupt används för att inaktivera avbrott för
-* en given PIN, där en tryckknapp är ansluten. Detta åstadkommes via
-* nollställning av motsvarande bit i någon av registren PCMSK0 (I/O-port B)
+* Funktionen Button_disable_interrupt anvÃ¤nds fÃ¶r att inaktivera avbrott fÃ¶r
+* en given PIN, dÃ¤r en tryckknapp Ã¤r ansluten. Detta Ã¥stadkommes via
+* nollstÃ¤llning av motsvarande bit i nÃ¥gon av registren PCMSK0 (I/O-port B)
 * eller PCMSK2 (I/O-port D).
 ******************************************************************************/
 void Button_disable_interrupt(struct Button* self)
