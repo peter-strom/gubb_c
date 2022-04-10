@@ -53,7 +53,7 @@ bool Button_is_pressed(Button* self)
 	{
 		return (READ_BIT(PINB, self->PIN));
 	}
-	else if (self->interrupt_enabled == IO_PORTD)
+	else if (self->io_port == IO_PORTD)
 	{
 		return (READ_BIT(PIND, self->PIN));
 	}
@@ -77,7 +77,8 @@ bool Button_is_pressed(Button* self)
 * true för att indikera att abrott nu är aktiverat.
 ******************************************************************************/
 void Button_enable_interrupt(Button* self)
-{
+{	
+	//asm("SEI");
 	if (self->io_port == IO_PORTB)
 	{
 		SET_BIT(PCICR, PCIE0);
