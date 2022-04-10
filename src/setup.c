@@ -31,8 +31,8 @@ void setup(void)
 	float timer1_delay = 500;
 	
 	led1 = new_Led(&led1_PIN);
-	button = new_Button(&button_PIN);
-	Button_enable_interrupt(button);
+	button = new_Button(button_PIN);
+	Button_enable_interrupt(&button);
 	
 	timer0 = new_Timer(&timer0_selection, &timer0_delay);
 	timer1 = new_Timer(&timer1_selection, &timer1_delay);

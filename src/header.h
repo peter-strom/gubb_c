@@ -11,7 +11,7 @@
 
 /* Globala variabler: */
 struct Led* led1; 
-struct Button* button; 
+Button button; 
 struct Timer *timer0, *timer1; 
 TempSensor tempSensor;
 

@@ -10,10 +10,7 @@
 *     0 - 7                     D         Samma som PIN på Arduino Uno        *
 *     8 - 13                    B            PIN på Arduino Uno - 8           *
 *******************************************************************************
-*
-* Först allokeras minne för ett nytt objekt av strukten Button döpt self. 
-* Om minnesallokeringen misslyckas så returneras NULL direkt. Annars initieras 
-* objektets instansvariabler. Specificerat PIN-nummer sparas, följt av att denna 
+* Objektets instansvariabler initieras. Specificerat PIN-nummer sparas, följt av att denna 
 * undersöks för att ta reda på vilken I/O-port som tryckknappaen är ansluten 
 * till, där 0 - 7 innebär att tryckknappen är ansluten till samma PIN på 
 * I/O-port D. Annars om aktuellt PIN-nummer ligger mellan 8 - 13, så är 
@@ -22,27 +19,22 @@
 * motsvarande bit i aktuellt PORT-register, vilket medför att tryckknappens
 * insignal alltid är hög eller låg (0 eller 1).
 ******************************************************************************/
-struct Button* new_Button(unsigned char* PIN)
+Button new_Button(uint8_t PIN)
 {
-	struct Button* self = (struct Button*)malloc(sizeof(struct Button));
-	if (!self)
-	{
-		return NULL;
+	Button self;
+	self.interrupt_enabled = false;
+	
+	if ((PIN >= 0) && (PIN <= 7))
+	{	
+		self.PIN = PIN;
+		self.io_port = IO_PORTD;
+		SET_BIT(PORTD, self.PIN);
 	}
-	
-	(*self).PIN = *PIN;
-	(*self).interrupt_enabled = false;
-	
-	if ((*self).PIN >= 0 && (*self).PIN <= 7)
+	else if ((PIN >= 8) && (PIN <= 13))
 	{
-		(*self).io_port = IO_PORTD;
-		SET_BIT(PORTD, (*self).PIN);
-	}
-	
-	else if ((*self).PIN >= 8 && (*self).PIN <= 13)
-	{
-		(*self).io_port = IO_PORTB;
-		SET_BIT(PORTB, (*self).PIN);
+		self.PIN = PIN-8;
+		self.io_port = IO_PORTB;
+		SET_BIT(PORTB, self.PIN);
 	}
 	
 	return self;
@@ -55,16 +47,15 @@ struct Button* new_Button(unsigned char* PIN)
 * tryckknappen är ansluten till I/O-port B, så läses motsvarande PIN från 
 * registret PIND och returneras. Annars vid fel så returneras false.
 ******************************************************************************/
-bool Button_is_pressed(struct Button* self)
+bool Button_is_pressed(Button* self)
 {
-	if ((*self).io_port == IO_PORTB)
+	if (self->io_port == IO_PORTB)
 	{
-		return (READ_BIT(PINB, (*self).PIN));
+		return (READ_BIT(PINB, self->PIN));
 	}
-	
-	else if ((*self).io_port == IO_PORTD)
+	else if (self->interrupt_enabled == IO_PORTD)
 	{
-		return (READ_BIT(PIND, (*self).PIN));
+		return (READ_BIT(PIND, self->PIN));
 	}
 	
 	return false;	
@@ -85,25 +76,20 @@ bool Button_is_pressed(struct Button* self)
 * Mask Register 2). Slutligen sätts instansvariabeln interrupt_enabled till
 * true för att indikera att abrott nu är aktiverat.
 ******************************************************************************/
-void Button_enable_interrupt(struct Button* self)
+void Button_enable_interrupt(Button* self)
 {
-	if ((*self).io_port == IO_PORTB)
+	if (self->io_port == IO_PORTB)
 	{
-		union Byte byte = new_Byte(PCICR);
-		byte.bits.bit0 = 1;
-		ASSIGN(PCICR, byte.data);
-		ASSIGN(PCMSK1, (*self).PIN);
+		SET_BIT(PCICR, PCIE0);
+		SET_BIT(PCMSK0, self->PIN);
+	}
+	else if (self->io_port == IO_PORTD)
+	{
+		SET_BIT(PCICR, PCIE2);
+		SET_BIT(PCMSK2, self->PIN);
 	}
 	
-	else if ((*self).io_port == IO_PORTD)
-	{
-		union Byte byte = new_Byte(PCICR);
-		byte.bits.bit2 = 1;
-		ASSIGN(PCICR, byte.data);
-		ASSIGN(PCMSK2, (*self).PIN);
-	}
-	
-	(*self).interrupt_enabled = true;
+	self->interrupt_enabled = true;
 	return;
 }
 
@@ -113,22 +99,17 @@ void Button_enable_interrupt(struct Button* self)
 * nollställning av motsvarande bit i någon av registren PCMSK0 (I/O-port B)
 * eller PCMSK2 (I/O-port D).
 ******************************************************************************/
-void Button_disable_interrupt(struct Button* self)
+void Button_disable_interrupt(Button* self)
 {
-	if ((*self).io_port == IO_PORTB)
+	if (self->io_port == IO_PORTB)
 	{
-		union Byte byte = new_Byte(PCMSK0);
-		byte.bits.bit0 = 0;
-		ASSIGN(PCMSK0, byte.data);
+		CLEAR_BIT(PCMSK0, self->PIN);
+	}
+	else if (self->io_port == IO_PORTD)
+	{
+		CLEAR_BIT(PCMSK2, self->PIN);
 	}
 	
-	else if ((*self).io_port == IO_PORTD)
-	{
-		union Byte byte = new_Byte(PCMSK2);
-		byte.bits.bit2 = 0;
-		ASSIGN(PCMSK2, byte.data);
-	}
-	
-	(*self).interrupt_enabled = false;
+	self->interrupt_enabled = false;
 	return;
 }
