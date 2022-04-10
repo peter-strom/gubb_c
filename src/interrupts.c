@@ -15,11 +15,12 @@
 ISR (PCINT0_vect)
 {
 	Button_disable_interrupt(&button);
-	Timer_on(timer0);
+	Timer_on(&timer0);
 	
 	if (Button_is_pressed(&button))
 	{
-		Timer_clear(timer1);
+		Timer_clear(&timer1);
+
 		print_temperature(&tempSensor);		
 		Led_toggle(&led1);	
 	}
@@ -37,11 +38,11 @@ ISR (PCINT0_vect)
 ******************************************************************************/
 ISR (TIMER0_OVF_vect)
 {
-	Timer_count(timer0);
+	Timer_count(&timer0);
 	
-	if (Timer_elapsed(timer0))
+	if (Timer_elapsed(&timer0))
 	{
-		Timer_off(timer0);
+		Timer_off(&timer0);
 		Button_enable_interrupt(&button);	
 	}
 	
@@ -59,9 +60,9 @@ ISR (TIMER0_OVF_vect)
 ******************************************************************************/
 ISR (TIMER1_COMPA_vect)
 {
-	Timer_count(timer1);	
+	Timer_count(&timer1);	
 	
-	if (Timer_elapsed(timer1))
+	if (Timer_elapsed(&timer1))
 	{
 		print_temperature(&tempSensor);
 		Led_toggle(&led1);
