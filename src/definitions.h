@@ -10,6 +10,7 @@
 #include <stdio.h> /* Bibliotek för implementering av I/O i C. */
 #include <stdlib.h> /* C:s standardbibliotek. */
 #include "Byte.h" /* Headerfil för inkludering av union för enkel bithantering. */
+#include <util/delay.h>
 
 /******************************************************************************
 * För att aktivera avbrott globalt så ettställs I-flaggan (Interrupt Flag)

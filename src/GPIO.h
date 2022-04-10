@@ -10,12 +10,12 @@
 * någon av digitala PINs 0 - 13 på Arduino Uno. Varje lysdiod kan tändas, 
 * släckas och togglas.
 ******************************************************************************/
-struct Led
+typedef struct Led
 {
-	unsigned char PIN; /* Aktuellt PIN-nummer. */
+	uint8_t PIN; /* Aktuellt PIN-nummer. */
 	bool enabled; /* Indikerar ifall lysdioden är på eller inte. */
 	IO_port io_port; /* I/O-port som lysdioden är ansluten till. */
-};
+} Led;
 
 /******************************************************************************
 * Strukten Button används för implementering av tryckknappar, som kan placeras 
@@ -31,23 +31,21 @@ struct Led
 ******************************************************************************/
 typedef struct Button
 {
-	unsigned char PIN; /* Aktuellt PIN-nummer. */
+	uint8_t PIN; /* Aktuellt PIN-nummer. */
 	IO_port io_port; /* Använd I/O-port. */
 	bool interrupt_enabled; /* Indikerar ifall PCI-avbrott är aktiverat. */
 } Button;
 
 /* Funktionsdeklarationer: */
-struct Led* new_Led(unsigned char* PIN); 
-void Led_on(struct Led* self);
-void Led_off(struct Led* self);
-void Led_toggle(struct Led* self);
-void Led_blink(struct Led* self, unsigned short* delay_time);
+Led new_Led(uint8_t PIN); 
+void Led_on(Led* self);
+void Led_off(Led* self);
+void Led_toggle(Led* self);
+void Led_blink(Led* self, uint16_t delay_time);
 
 Button new_Button(uint8_t PIN); 
 bool Button_is_pressed(Button* self);
 void Button_enable_interrupt(Button* self);
 void Button_disable_interrupt(Button* self);
-
-void delay(unsigned short* delay_time);
 
 #endif /* GPIO_H_ */
