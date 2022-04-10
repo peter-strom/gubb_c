@@ -38,7 +38,7 @@ void setup(void)
 	timer1 = new_Timer(&timer1_selection, &timer1_delay);
 	Timer_on(timer1);
 	
-	tempSensor = new_TempSensor(&temp_PIN);
+	tempSensor = new_TempSensor(temp_PIN);
 	
 	init_serial();
 	return;

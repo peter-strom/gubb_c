@@ -13,7 +13,7 @@
 struct Led* led1; 
 struct Button* button; 
 struct Timer *timer0, *timer1; 
-struct TempSensor* tempSensor;
+TempSensor tempSensor;
 
 /* Funktionsdeklarationer: */
 void setup(void);
