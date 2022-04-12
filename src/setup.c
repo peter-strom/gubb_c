@@ -28,9 +28,7 @@ init_serial();
 	tempSensor = new_TempSensor(1);
 	
 	timer0 = new_Timer(TIMER0, 300);
-	timer1 = new_Timer(TIMER1, 60000);
-	Timer_on(&timer1);
-
-
+	timer1 = new_DynamicTimer(TIMER1, 10);
+	DynamicTimer_on(&timer1);
 	return;
 }

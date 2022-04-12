@@ -8,11 +8,12 @@
 #include "Timer.h"
 #include "Serial.h"
 #include "ADC.h"
-
+#include "DynamicTimer.h"
 /* Globala variabler: */
 Led led1; 
 Button button; 
-Timer timer0, timer1; 
+Timer timer0;
+DynamicTimer timer1; 
 TempSensor tempSensor;
 
 /* Funktionsdeklarationer: */

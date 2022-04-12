@@ -19,7 +19,7 @@ ISR (PCINT0_vect)
 	
 	if (Button_is_pressed(&button))
 	{
-		Timer_clear(&timer1);
+		DynamicTimer_update(&timer1);
 
 		print_temperature(&tempSensor);		
 		Led_toggle(&led1);	
@@ -60,9 +60,9 @@ ISR (TIMER0_OVF_vect)
 ******************************************************************************/
 ISR (TIMER1_COMPA_vect)
 {
-	Timer_count(&timer1);	
+	DynamicTimer_count(&timer1);	
 	
-	if (Timer_elapsed(&timer1))
+	if (DynamicTimer_elapsed(&timer1))
 	{
 		print_temperature(&tempSensor);
 		Led_toggle(&led1);
