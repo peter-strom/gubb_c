@@ -9,6 +9,10 @@
 
 #define MAX_CAPACITY 100
 
+/**
+ * @brief DDynamicTimer combines the struct Vector and Timer into one dynamic timer.
+ * 
+ */
 typedef struct DynamicTimer 
 {
 	Timer timer;

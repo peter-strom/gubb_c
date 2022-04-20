@@ -4,6 +4,14 @@
 // Statiska funktioner
 static inline size_t check_capacity(const size_t capacity);
 
+/**
+ * @brief Initiates the structure TimerSelect
+ * 
+ * @param timerSelection the desired timer.
+ * @param capacity desired capacity of stored time messurements that 
+ * will result in an average delay time.
+ * @return DynamicTimer 
+ */
 DynamicTimer new_DynamicTimer(const TimerSelection timerSelection, const size_t capacity)
 {
 	DynamicTimer self;
@@ -15,28 +23,46 @@ DynamicTimer new_DynamicTimer(const TimerSelection timerSelection, const size_t 
 	self.initiated = false;
 	return self;
 }
-/******************************************************************************
-* Funktionen DynamicTimer_on utgör en wrapper för funktionen Timer_on, som används för
-* att sätta på 
-******************************************************************************/
 
+/**
+ * @brief turns the timer on
+ * 
+ * @param self pointer to a structure of type DynamicTimer
+ */
 void DynamicTimer_on(DynamicTimer* self)
 {
 	Timer_on(&self->timer);
 	return;
 }
 
+/**
+ * @brief turns off the timer
+ * 
+ * @param self pointer to a structure of type DynamicTimer
+ */
 void DynamicTimer_off(DynamicTimer* self)
 {
 	
 	Timer_off(&self->timer);
 	return;
 }
+
+/**
+ * @brief toggles the timer on/off
+ * 
+ * @param self pointer to a structure of type DynamicTimer
+ */
 void DynamicTimer_toggle(DynamicTimer* self)
 {
 	Timer_toggle(&self->timer);
 	return;
 }
+
+/**
+ * @brief counts interrupts.
+ * 
+ * @param self pointer to a structure of type DynamicTimer
+ */
 void DynamicTimer_count(DynamicTimer* self)
 {
 	if (self->timer.enabled)
@@ -47,12 +73,26 @@ void DynamicTimer_count(DynamicTimer* self)
 	return;
 }
 
+/**
+ * @brief checks if the timer has elapsed
+ * 
+ * @param self pointer to a structure of type DynamicTimer
+ * @return bool
+ */
 bool DynamicTimer_elapsed(DynamicTimer* self)
 {
 	if (!self->timer.required_interrupts)
+	{		
 		return false;
+	}
 	return Timer_elapsed(&self->timer);
 }
+
+/**
+ * @brief shuts down and resets the dynamic timer.
+ * 
+ * @param self pointer to a structure of type DynamicTimer
+ */
 void DynamicTimer_clear(DynamicTimer* self)
 {
 	Timer_off(&self->timer);
@@ -63,6 +103,13 @@ void DynamicTimer_clear(DynamicTimer* self)
 	self->initiated = false;
 	return;
 }
+
+/**
+ * @brief Initiates and updates the dynamic timer with the messured time since the last
+ * timer reset. 
+ * 
+ * @param self pointer to a structure of type DynamicTimer
+ */
 void DynamicTimer_update(DynamicTimer* self)
 {
 	if (!self->initiated)
@@ -80,7 +127,16 @@ void DynamicTimer_update(DynamicTimer* self)
 	}
 	else
 	{
-		Vector_set(&self->interrupt_vector, self->next, self->interrupt_counter);
+		//test for DynamicTimer_set_capacity
+		if(self->next == 3 && self->interrupt_vector.elements==10)
+		{
+			DynamicTimer_set_capacity(self, 5);
+			self->next = 0x05;
+		}
+		else
+		{
+			Vector_set(&self->interrupt_vector, self->next, self->interrupt_counter);
+		}
 	}
 	
 	self->interrupt_counter = 0x00;
@@ -88,20 +144,21 @@ void DynamicTimer_update(DynamicTimer* self)
 		{
 			self->next = 0x00;	
 		}
-	//const uint32_t average_interrupts = Vector_average(&self->interrupt_vector);
+	
 	self->timer.required_interrupts = Vector_average(&self->interrupt_vector);
 	serial_print("--------------------------------------------------------\n");
 	serial_print("Dynamic timer updated!\n");
-	DynamicTimer_print(self);
-	
-	/*if (self->interrupt_vector.elements == 5)
-		{
-			DynamicTimer_set_capacity(self, 20); // Test av set_capacity
-		}*/
-	
-	
+	DynamicTimer_print(self);	
 	return;
 }
+
+
+/**
+ * @brief Sets a new capacity for the dynamic timer.
+ * And preserves the latest time messurments.
+ * @param self pointer to a structure of type DynamicTimer
+ * @param new_capacity desired capacity for number of stored time measurements.
+ */
 void DynamicTimer_set_capacity(DynamicTimer* self, const size_t new_capacity)
 {
 	if (!new_capacity) return;
@@ -113,28 +170,39 @@ void DynamicTimer_set_capacity(DynamicTimer* self, const size_t new_capacity)
 		return;
 	}
 	
-	const size_t last = self->interrupt_vector.elements -1;
-	
-	if (self->next >= self->interrupt_vector.elements/2)
+	//find the start index for the most recent data
+		uint8_t latest_data = self->next - new_capacity;
+	if(self->next < new_capacity)
 	{
-		for (register size_t i = 0; i < self->interrupt_vector.elements / 2; i++)
-		{
-			self->interrupt_vector.data[i] = self->interrupt_vector.data[last - i];
-		}
+		latest_data = latest_data + self->capacity;
 	}
 	
+	//copy the most recent data to a temporary array
+	uint32_t temp_data[new_capacity];
+	for(uint8_t i = 0 ; i < new_capacity; i++)
+	{
+		temp_data[i] = self->interrupt_vector.data[latest_data];
+		if (++latest_data >= self->capacity) 
+		{
+			latest_data = 0x00;
+		}
+	}
+
 	serial_print_unsigned("Vector capacity resized from %lu ", self->capacity);
 	Vector_resize(&self->interrupt_vector, new_capacity);
 	self->capacity = new_capacity;
+	self->interrupt_vector.data = temp_data;
+	self->next = 0x00;
 	serial_print_unsigned("to new value %lu\n\n", self->capacity);
+
 	return;
 }
 
-/******************************************************************************
-* Funktionen DynamicTimer_print används för att skriva ut information om en
-* dynamisk timer, till exempel, aktuell fördröjningstid, antal lagrade element
-* samt summan och genomsnittet av dessa.
-******************************************************************************/
+/**
+ * @brief Prints the current status of the dynamic timer.
+ * 
+ * @param self pointer to a structure of type DynamicTimer
+ */
 void DynamicTimer_print(const DynamicTimer* self)
 {
 	serial_print("--------------------------------------------------------\n");
@@ -144,11 +212,22 @@ void DynamicTimer_print(const DynamicTimer* self)
 	serial_print_unsigned("Sum of stored elements: %lu\n", Vector_sum(&self->interrupt_vector));
 	serial_print_unsigned("Average of values from vector: %lu\n", (uint32_t)(Vector_average(&self->interrupt_vector)+0.5));
 	serial_print_unsigned("Delay time: %lu ms\n", self->timer.required_interrupts * INTERRUPT_TIME);
+	for(uint8_t i =0; i < self->interrupt_vector.elements; i++)
+	{
+		serial_print_unsigned("element: %d - ", i);
+		serial_print_unsigned("value: %lu  \n", self->interrupt_vector.data[i]);
+	}
 	serial_print("--------------------------------------------------------\n");
-	
+
 	return;
 }
 
+/**
+ * @brief Checks if the desired capacity exceeds the max limit.
+ * 
+ * @param capacity desired capacity 
+ * @return size_t desired capacity or the maximum allowed capacity
+ */
 static inline size_t check_capacity(const size_t capacity)
 {
 	if (capacity > MAX_CAPACITY) 
