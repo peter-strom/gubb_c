@@ -4,16 +4,17 @@
 
 /* Inkluderingsdirektiv: */
 #include "definitions.h"
-#include "GPIO.h" 
+#include "GPIO.h"
 #include "Timer.h"
 #include "Serial.h"
 #include "ADC.h"
 #include "DynamicTimer.h"
+#include "WDT.h"
 /* Globala variabler: */
-Led led1; 
-Button button; 
+Led led1;
+Button button;
 Timer timer0;
-DynamicTimer timer1; 
+DynamicTimer timer1;
 TempSensor tempSensor;
 
 /* Funktionsdeklarationer: */
