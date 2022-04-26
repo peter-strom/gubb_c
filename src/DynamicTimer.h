@@ -11,9 +11,9 @@
 
 /**
  * @brief DDynamicTimer combines the struct Vector and Timer into one dynamic timer.
- * 
+ *
  */
-typedef struct DynamicTimer 
+typedef struct DynamicTimer
 {
 	Timer timer;
 	Vector interrupt_vector;
@@ -24,15 +24,14 @@ typedef struct DynamicTimer
 } DynamicTimer;
 
 DynamicTimer new_DynamicTimer(const TimerSelection timerSelection, const size_t capacity);
-void DynamicTimer_on(DynamicTimer* self);
-void DynamicTimer_off(DynamicTimer* self);
-void DynamicTimer_toggle(DynamicTimer* self);
-void DynamicTimer_count(DynamicTimer* self);
-bool DynamicTimer_elapsed(DynamicTimer* self);
-void DynamicTimer_clear(DynamicTimer* self);
-void DynamicTimer_update(DynamicTimer* self);
-void DynamicTimer_set_capacity(DynamicTimer* self, const size_t new_capacity);
-void DynamicTimer_print(const DynamicTimer* self);
-
+void DynamicTimer_on(DynamicTimer *self);
+void DynamicTimer_off(DynamicTimer *self);
+void DynamicTimer_toggle(DynamicTimer *self);
+void DynamicTimer_count(DynamicTimer *self);
+bool DynamicTimer_elapsed(DynamicTimer *self);
+void DynamicTimer_clear(DynamicTimer *self);
+void DynamicTimer_update(DynamicTimer *self);
+void DynamicTimer_set_capacity(DynamicTimer *self, const size_t new_capacity);
+void DynamicTimer_print(const DynamicTimer *self);
 
 #endif /*DYNAMICTIMER_H_*/
