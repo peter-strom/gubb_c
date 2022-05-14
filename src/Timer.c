@@ -10,9 +10,7 @@ static uint32_t get_required_interrupts(uint32_t delay_time);
  * timerkretsar Timer 0 - 2 som skall användas, medan delay_time utgörs av
  * den fördröjningstid som timern skall räkna till, mätt i millisekunder.
  *
- * Först allokeras minne för ett nytt objekt av strukten Timer, som döps
- * till self. Om minnesallokeringen misslyckas returneras NULL direkt. Annars
- * initieras struktens medlemmar; enabled sätts till false för att indikera
+ * Struktens medlemmar initieras; enabled sätts till false för att indikera
  * att timer-kretsen är avstängd vid start, vald timerkrets sparas via
  * medlemmen timerSelection, antalet exekverade avbrott sätts till noll vid
  * start, medan antalet avbrott som krävs för specificerad fördröjningstid
