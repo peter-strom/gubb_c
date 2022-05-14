@@ -16,6 +16,7 @@
  * på 9600 kbps. För att första transmitterade utskrift skall hamna längst
  * till vänster på den första raden så transmitteras ett vagnreturstecken \r,
  * följt av ett nolltecken \0 för att indikera att transmissionen är slutförd.
+ * Nulltecknet resulterar i ful uoutput i VSCode och är därför bortkommenterat.
  ******************************************************************************/
 void init_serial(void)
 {
@@ -27,7 +28,7 @@ void init_serial(void)
 		SET_BAUD_RATE_TO_9600_KBPS;
 		SET_TRANSMSSION_SIZE;
 		CARRIAGE_RETURN;
-		END_TRANSMISSION;
+		//END_TRANSMISSION;
 		serial_initialized = true;
 	}
 	return;
@@ -41,7 +42,8 @@ void init_serial(void)
  * ett nyradstecken \n transmitteras så trasmitteras ett vagnreturstecken \r
  * direkt efter för att efterföljande tecken skall hamna längst till vänster
  * på nästa rad. Transmissionen avslutas med att ett nolltecken \0 för att
- * indikera textstyckets slut.
+ * indikera textstyckets slut. 
+ * Nulltecknet resulterar i ful uoutput i VSCode och är därför bortkommenterat.  
  ******************************************************************************/
 void serial_print(char *s)
 {
@@ -53,7 +55,7 @@ void serial_print(char *s)
 			CARRIAGE_RETURN;
 		}
 	}
-	END_TRANSMISSION;
+	//END_TRANSMISSION;
 	return;
 }
 
