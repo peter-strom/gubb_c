@@ -1,10 +1,10 @@
 # Projekt 1 ELA21, YRGO
 Handledare Erik Pihl
 
-Changelog
-************************************************************************
+## Changelog
 
-#Commits on Apr 9, 2022
+
+### Commits on Apr 9, 2022
 
     commit 68be374
         -Cloned original repo and merged it into a platform.io project
@@ -40,7 +40,7 @@ Changelog
         setup.c
             -typedef enum 
 
-#Commits on Apr 10, 2022
+### Commits on Apr 10, 2022
 
     commit 45dff88 - Serial_fix
         MemoryBlock.c
@@ -118,7 +118,7 @@ Changelog
         setup.c
             -cleaned up pointers
 
-#Commits on Apr 11, 2022
+### Commits on Apr 11, 2022
 
     commit 6450eee - Timer fix
         Timer.c
@@ -150,18 +150,18 @@ Changelog
 
     commit 6656d6d - added Vector struct
 
-#Commits on Apr 20, 2022 
+### Commits on Apr 20, 2022 
 
     commit 4bd1fcf & 4cce145 - added DynamicTimer struct
 
 
-#Commits on Apr 26, 2022
+### Commits on Apr 26, 2022
 
     commit 39dda89 - added WDT (WatchDog Timer)
 
     commit e86a50d -proper indent and format with shift+alt+f
 
-#Commits on May 14, 2022
+### Commits on May 14, 2022
 
     commit 3f07b97 
         Serial.c
