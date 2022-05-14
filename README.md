@@ -13,7 +13,7 @@ Programmet skulle köras på ett inbyggt system beståendes av ett Arduino Uno, 
 
 ## Resultat
 
-Ett mycket lärorikt, roligt och mycket väl planerat projekt som gav många timmars felsökande där de svåraste felen att hitta var skrivningar till fel register. Fick ny bekantskap med bitmakron som jag kom så pass bra överens med att jag lät dom vara kvar. Men det roligaste var nog att skriva funktionen DynamicTimer_set_capacity() där testresultatet är bifogat som bild. Den bästa lärdomen jag fick av detta projektet var att structar blir mycket snyggare och enklare utan funktionspekare.
+Ett mycket lärorikt, roligt och mycket väl planerat projekt som gav många timmars felsökande där de svåraste felen att hitta var skrivningar till fel register. Fick ny bekantskap med bitmakron som jag kom så pass bra överens med att jag lät dom vara kvar. Men det roligaste var nog att skriva funktionen DynamicTimer_set_capacity() där testresultatet är bifogat som bild. Den bästa lärdomen jag fick av detta projektet var att structar blir mycket snyggare och enklare utan funktionspekare. Men att migrera till visual studio code med platfrom.io var också lärorikt. Mycket tid har också lagts på att experimentera med git. 
 
 ![alt text](https://github.com/peter-strom/gubb_c/blob/main/dynamic_timer_test-code.png?raw=true)
 
