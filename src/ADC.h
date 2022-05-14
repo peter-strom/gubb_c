@@ -5,6 +5,7 @@
 /* Inkluderingsdirektiv: */
 #include "definitions.h"
 #include "Serial.h"
+#include "Vector.h"
 
 /******************************************************************************
  * Formler för beräkning av temperatur:
@@ -58,6 +59,9 @@ typedef struct TempSensor
 	uint8_t PIN;			 /* PIN-nummer för avläsning. */
 	uint16_t ADC_result;	 /* Lagring av resultat från AD-omvandling. */
 	Temperature temperature; /* Aktuell rumstemperatur. */
+	Vector temperature_vector;
+	uint8_t vector_capacity;
+	uint8_t vector_next;
 } TempSensor;
 
 /* Funktionsdeklarationer: */

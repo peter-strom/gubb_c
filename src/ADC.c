@@ -3,15 +3,14 @@
 
 static void ADC_read(TempSensor* self);
 static void init_ADC(void);
+static void store_temperature(TempSensor* self);
 
 /******************************************************************************
 * Funktionen new_TempSensor används för implementering av en temperatursensor 
 * ansluten till någon av analoga pinnar A0 - A5 via ett objekt av strukten
 * TempSensor. Ingående argument PIN utgör en pekare till aktuellt PIN-nummer. 
-* Först allokeras minne för ett nytt objekt av strukten TempSensor döpt self.
-* Ifall minnesallokeringen misslyckas så avslutas funktionen direkt. Annars
-* initieras objektets instansvariabler, följt av att det initierade objektet
-* returneras.
+* Efteråt initieras objektets instansvariabler, följt av att det initierade 
+* objektet returneras.
 ******************************************************************************/
 TempSensor new_TempSensor(uint8_t PIN)
 {
@@ -20,6 +19,9 @@ TempSensor new_TempSensor(uint8_t PIN)
 	self.PIN = PIN;
 	self.ADC_result = 0x00;
 	self.temperature.rounded = 0x00;
+	self.temperature_vector = new_Vector();
+	self.vector_capacity = 0x0A;
+	self.vector_next = 0x00;
 	init_ADC();
 	return self;
 }
@@ -39,11 +41,13 @@ TempSensor new_TempSensor(uint8_t PIN)
 *
 * där Uin är den beräknade analoga inspänningen (0 - 5 V).
 *
-* Slutligen transmitteras den beräknade temperaturen till vår PC via anrop av
+* Sedan transmitteras den beräknade temperaturen till vår PC via anrop av
 *  funktionen serial_print_integer, som möjliggör sammansättning av text och 
 * heltal samt seriell överföring. Därmed transmitteras textstycktet 
 * "Temperature: %d degrees", där %d är formatspecificerare för heltal och 
 * ersätts med avläst rumstemperatur.
+*
+* Slutligen skrivs genomstnittliga temperaturen ut via Vector_average-funktionen.
 ******************************************************************************/
 void print_temperature(TempSensor* self)
 {
@@ -51,7 +55,9 @@ void print_temperature(TempSensor* self)
 	ADC_read(self);
 	Uin = VCC * (float)self->ADC_result / ADC_MAX;
 	self->temperature.rounded = (int)(100 * Uin - 50 + 0.5);
-	serial_print_integer("Temperature: %d degrees Celcius\n", self->temperature.rounded);
+	store_temperature(self);
+	serial_print_integer("Temperature: %d degrees Celcius - ", self->temperature.rounded);
+	serial_print_integer("Average temperature: %d degrees Celcius \n", Vector_average(&self->temperature_vector));
 	return;
 }
 
@@ -87,4 +93,25 @@ static void init_ADC(void)
 	WAIT_FOR_AD_CONVERSION_COMPLETE;
 	RESET_ADC_INTERRUPT_FLAG;
 	return;
+}
+
+/**
+ * @brief Stores current temperature in vector
+ * 
+ * @param self pointer to a structure of type TempSensor
+ */
+static void store_temperature(TempSensor* self)
+{
+	if(self->temperature_vector.elements < self->vector_capacity)
+	{
+		Vector_push(&self->temperature_vector, self->temperature.rounded);
+	}
+	else
+	{
+		Vector_set(&self->temperature_vector, self->vector_next, self->temperature.rounded);
+	}
+	if (++self->vector_next >= self->vector_capacity)
+	{
+		self->vector_next = 0x00;
+	}
 }
